@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { Blockchain } = require('../blockchain/Blockchain.js');
 const { Block } = require('../blockchain/Block.js');
 const { Product } = require('../models/Product.js');
+const { ProductOwner } = require('../models/ProductOwner.js');
 
 const router = express.Router();
 
@@ -22,8 +23,10 @@ router.get('/:id',async (req,res) => {
 
 //create new product
 router.post('/',async (req,res) => {
-    const { name, description, brand, quantity, price, productId } = req.body;
+    const { name, description, brand, quantity, price, ownerId } = req.body;
     const id = uuid();
+
+    const owner = await ProductOwner.findById(ownerId);
 
     const product = {
         name,
@@ -38,13 +41,17 @@ router.post('/',async (req,res) => {
 
     // console.log(ProductChain.chain);
 
-    const newProduct = new Product({
+    let newProduct = new Product({
         name: name,
         productId: id,
         blockchain: ProductChain.chain
     });
 
-    await newProduct.save();
+    newProduct = await newProduct.save();
+
+    owner.productList = [...owner.productList, id];
+    await owner.save();
+
     return res.status(200).json({ newProduct })
 });
 
