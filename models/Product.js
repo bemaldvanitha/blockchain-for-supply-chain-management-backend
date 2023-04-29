@@ -6,21 +6,9 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        required: true
-    },
-    brand: {
-        type: String,
-        required: true
-    },
-    quantity: {
-        type: String,
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
+    productId: {
+      type: String,
+      required: true
     },
     blockchain: {
         type: Array,
@@ -31,4 +19,4 @@ const productSchema = new mongoose.Schema({
 // Create a model for the blog post schema
 const Product = mongoose.model('Product', productSchema);
 
-module.exports = Product;
+module.exports = { Product };
