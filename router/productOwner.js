@@ -18,6 +18,12 @@ router.get('/:id',async (req,res) => {
     return res.status(200).json({ owner })
 });
 
+//get all product owner details
+router.get('/',async (req,res) => {
+    const owners = await ProductOwner.find();
+    return res.status(200).json({ owners })
+});
+
 //create new owner
 router.post('/',async (req,res) => {
     const { brandName, location, contactNumber, contactEmail } = req.body;

@@ -21,6 +21,23 @@ router.get('/:id',async (req,res) => {
     return res.status(200).json({ product })
 });
 
+//get all products for product owner
+router.get('/product-owner/:id',async (req,res) => {
+    const owner = await ProductOwner.findById(req.params.id);
+    const allProducts = await Product.find();
+    const prodIdList = owner.productList;
+
+    const prodList = allProducts.map((prod) => {
+        if(prodIdList.includes(prod.productId)){
+            return prod;
+        }
+    });
+
+    //console.log(prodList)
+
+    return res.status(200).json({ prodList })
+});
+
 //create new product
 router.post('/',async (req,res) => {
     const { name, description, brand, quantity, price, ownerId } = req.body;
