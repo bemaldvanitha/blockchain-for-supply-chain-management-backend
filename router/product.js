@@ -1,4 +1,5 @@
 const express = require('express');
+const { uuid } = require('uuidv4');
 
 const { Blockchain } = require('../blockchain/Blockchain.js');
 const { Block } = require('../blockchain/Block.js');
@@ -12,8 +13,22 @@ router.get('/{id}',(req,res) => {
 
 //create new product
 router.post('/',(req,res) => {
+    const { name, description, brand, quantity, price } = req.body;
+    const id = uuid();
+
+    const product = {
+        id,
+        name,
+        description,
+        brand,
+        quantity,
+        price
+    };
+
     const ProductChain = new Blockchain();
-    ProductChain.addBlock(new Block(Date.now().toString(), {  }));
+    ProductChain.addBlock(new Block(Date.now().toString(), { ...product }));
+
+    console.log(ProductChain.chain);
 });
 
 //update current product
