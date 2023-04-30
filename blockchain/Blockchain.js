@@ -13,6 +13,13 @@ class Blockchain {
         return this.chain[this.chain.length - 1];
     }
 
+    clearAndAddBlock(blockchain){
+        this.chain = [];
+        blockchain.map((block) => {
+            this.chain.push(block);
+        });
+    }
+
     addBlock(block) {
         block.prevHash = this.getLastBlock().hash;
         block.hash = block.getHash();

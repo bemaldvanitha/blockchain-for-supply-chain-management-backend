@@ -69,12 +69,34 @@ router.post('/',async (req,res) => {
     owner.productList = [...owner.productList, id];
     await owner.save();
 
-    return res.status(200).json({ newProduct })
+    return res.status(201).json({ newProduct });
 });
 
 //update current product
-router.put('/{id}',(req,res) => {
+router.put('/:id', async (req,res) => {
+    try{
+        const product = await Product.findById(req.params.id);
+        const newData = req.body;
 
+        if(!product){
+            return res.status(404).json({ msg: 'No Product Found' })
+        }
+
+        const ProductChain = new Blockchain();
+        ProductChain.clearAndAddBlock(product.blockchain);
+        ProductChain.addBlock(new Block(Date.now().toString(), { ...newData }));
+
+        // console.log(ProductChain.chain);
+
+        product.blockchain = [ ...product.blockchain, ProductChain.chain[ProductChain.chain.length - 1] ];
+        await product.save();
+
+        return res.status(200).json({ product });
+
+    }catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 //delete product
