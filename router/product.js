@@ -62,36 +62,41 @@ router.get('/product-owner/:id',async (req,res) => {
 
 //create new product
 router.post('/',async (req,res) => {
-    const { name, description, brand, quantity, price, ownerId } = req.body;
-    const id = uuid();
+    try{
+        const { name, description, brand, quantity, price, ownerId } = req.body;
+        const id = uuid();
 
-    const owner = await ProductOwner.findById(ownerId);
+        const owner = await ProductOwner.findById(ownerId);
 
-    const product = {
-        name,
-        description,
-        brand,
-        quantity,
-        price,
-    };
+        const product = {
+            name,
+            description,
+            brand,
+            quantity,
+            price,
+        };
 
-    const ProductChain = new Blockchain();
-    ProductChain.addBlock(new Block(Date.now().toString(), { ...product }));
+        const ProductChain = new Blockchain();
+        ProductChain.addBlock(new Block(Date.now().toString(), { ...product }));
 
-    // console.log(ProductChain.chain);
+        // console.log(ProductChain.chain);
 
-    let newProduct = new Product({
-        name: name,
-        productId: id,
-        blockchain: ProductChain.chain
-    });
+        let newProduct = new Product({
+            name: name,
+            productId: id,
+            blockchain: ProductChain.chain
+        });
 
-    newProduct = await newProduct.save();
+        newProduct = await newProduct.save();
 
-    owner.productList = [...owner.productList, id];
-    await owner.save();
+        owner.productList = [...owner.productList, id];
+        await owner.save();
 
-    return res.status(201).json({ newProduct });
+        return res.status(201).json({ newProduct });
+    }catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 //update current product

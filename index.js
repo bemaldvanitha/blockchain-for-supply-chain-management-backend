@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const productRouter = require('./router/product.js');
 const productOwnerRouter = require('./router/productOwner.js');
+const qrRouter = require('./router/qr.js');
 const connectDB = require('./database/connect.js');
 
 const app = express();
@@ -11,6 +12,7 @@ connectDB();
 
 app.use('/product', productRouter);
 app.use('/owner', productOwnerRouter);
+app.use('/qr',qrRouter);
 
 app.listen(3000,() =>{
     console.log('Server started on port 3000');
