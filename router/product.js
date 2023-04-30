@@ -11,14 +11,29 @@ const router = express.Router();
 
 //get one product details
 router.get('/:id',async (req,res) => {
-    const product = await Product.findById(req.params.id);
+    try{
+        const product = await Product.findById(req.params.id);
 
-    if(!product){
-        return res.status(404).json({ msg: 'No Product Found' })
+        if(!product){
+            return res.status(404).json({ msg: 'No Product Found' })
+        }
+
+        const ProductChain = new Blockchain();
+        ProductChain.clearAndAddBlock(product.blockchain);
+
+        // console.log(product);
+        // console.log(ProductChain.isValid());
+
+        if(ProductChain.isValid()){
+            return res.status(200).json({ product })
+        }else{
+            return res.status(200).json({ msg: 'blockchain got tampered' });
+        }
+
+    }catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
-
-    //console.log(product);
-    return res.status(200).json({ product })
 });
 
 //get all products for product owner

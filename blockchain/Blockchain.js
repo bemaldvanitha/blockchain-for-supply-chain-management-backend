@@ -16,7 +16,9 @@ class Blockchain {
     clearAndAddBlock(blockchain){
         this.chain = [];
         blockchain.map((block) => {
-            this.chain.push(block);
+            let curBlock = new Block();
+            curBlock.setBlock(block.timestamp, block.data, block.hash, block.prevHash, block.nonce);
+            this.chain.push(curBlock);
         });
     }
 

@@ -9,6 +9,14 @@ class Block {
         this.nonce = 0;
     }
 
+    setBlock(timestamp, data, hash, prevHash, nonce){
+        this.timestamp = timestamp;
+        this.data = data;
+        this.hash = hash;
+        this.prevHash = prevHash;
+        this.nonce = nonce;
+    }
+
     // hash function
     getHash() {
         return SHA256(this.prevHash + this.timestamp + JSON.stringify(this.data) + this.nonce);
