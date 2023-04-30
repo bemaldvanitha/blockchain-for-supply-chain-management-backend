@@ -38,19 +38,26 @@ router.get('/:id',async (req,res) => {
 
 //get all products for product owner
 router.get('/product-owner/:id',async (req,res) => {
-    const owner = await ProductOwner.findById(req.params.id);
-    const allProducts = await Product.find();
-    const prodIdList = owner.productList;
+    try{
+        const owner = await ProductOwner.findById(req.params.id);
+        const allProducts = await Product.find();
+        const prodIdList = owner.productList;
 
-    const prodList = allProducts.map((prod) => {
-        if(prodIdList.includes(prod.productId)){
-            return prod;
-        }
-    });
+        let prodList = allProducts.map((prod) => {
+            const ProductChain = new Blockchain();
+            ProductChain.clearAndAddBlock(prod.blockchain);
 
-    //console.log(prodList)
+            if(prodIdList.includes(prod.productId) && ProductChain.isValid()){
+                return prod;
+            }
+        });
+        //console.log(prodList)
 
-    return res.status(200).json({ prodList })
+        return res.status(200).json({ prodList });
+    }catch (err){
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 //create new product
