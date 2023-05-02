@@ -1,9 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>hello</title>
+    <title>
+        <%= product.name %>
+    </title>
 </head>
 <body>
-    <h1>hello</h1>
+
+    <section>
+        <h1>Manufacture details</h1>
+        <p>Brand - <%= owner.brandName %></p>
+        <p>Location - <%= owner.location %></p>
+        <p>Contact Number - <%= owner.contactNumber %></p>
+        <p>Contact Email - <%= owner.contactEmail %></p>
+    </section>
+
+    <section>
+        <h1>Product information</h1>
+        <h4><%= product.name %></h4>
+        <h2>Data</h2>
+        <% product.data.forEach(function(dateItem) { %>
+                <% if(dateItem.name){ %>
+                    <p>name - <%= dateItem.name %></p>
+                <% } %>
+                <% if(dateItem.description){ %>
+                    <p>description - <%= dateItem.description %></p>
+                <% } %>
+                <% if(dateItem.brand){ %>
+                    <p>brand - <%= dateItem.brand %></p>
+                <% } %>
+                <% if(dateItem.quantity){ %>
+                    <p>quantity - <%= dateItem.quantity %></p>
+                <% } %>
+                <% if(dateItem.price){ %>
+                    <p>price - <%= dateItem.price %></p>
+                <% } %>
+                <% if(dateItem.expDate){ %>
+                    <p>expDate - <%= dateItem.expDate %></p>
+                <% } %>
+                <% if(dateItem.manDate){ %>
+                    <p>manDate - <%= dateItem.manDate %></p>
+                <% } %>
+                <% if(dateItem.ingredient){ %>
+                    <p>ingredient - <%= dateItem.ingredient %></p>
+                <% } %>
+                <% if(dateItem.salt){ %>
+                    <p>salt - <%= dateItem.salt %></p>
+                <% } %>
+        <% }); %>
+    </section>
+
 </body>
 </html>

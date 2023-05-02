@@ -127,9 +127,19 @@ router.put('/:id', async (req,res) => {
 });
 
 //delete product
-router.delete('/:id',async (req,res) => {
+router.delete('/:id/:owner_id',async (req,res) => {
     try{
         const product = await Product.findById(req.params.id);
+        const owner = await ProductOwner.findById(req.params.owner_id);
+
+        const productId = product.productId;
+        const indexToDelete = owner.productList.findIndex(prodId => prodId === productId );
+
+        if (indexToDelete !== -1) {
+            owner.productList.splice(indexToDelete, 1);
+        }
+
+        await owner.save();
 
         if(!product){
             return res.status(404).json({ msg: 'No Product Found' })
