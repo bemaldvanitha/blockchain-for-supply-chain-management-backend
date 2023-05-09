@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    background-color: blueviolet;
+}
+
+.section {
+    width: 50%;
+    background-color: lightgray;
+    padding: 20px;
+}

@@ -4,51 +4,213 @@
     <title>
         <%= product.name %>
     </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./public/index.css">
 </head>
 <body>
 
-    <section>
-        <h1>Manufacture details</h1>
-        <p>Brand - <%= owner.brandName %></p>
-        <p>Location - <%= owner.location %></p>
-        <p>Contact Number - <%= owner.contactNumber %></p>
-        <p>Contact Email - <%= owner.contactEmail %></p>
+<div class="container row m-3">
+
+    <section class="col">
+        <div class="card text-center bg-light">
+            <div class="card-body">
+                <h1 class="card-title text-justify">Manufacture details</h1>
+                <p class="card-text text-justify">Brand - <%= owner.brandName %></p>
+                <p class="card-text text-justify">Location - <%= owner.location %></p>
+                <p class="card-text text-justify">Contact Number - <%= owner.contactNumber %></p>
+                <p class="card-text text-justify">Contact Email - <%= owner.contactEmail %></p>
+            </div>
+        </div>
     </section>
 
-    <section>
-        <h1>Product information</h1>
-        <h4><%= product.name %></h4>
-        <h2>Data</h2>
-        <% product.data.forEach(function(dateItem) { %>
-                <% if(dateItem.name){ %>
-                    <p>name - <%= dateItem.name %></p>
-                <% } %>
-                <% if(dateItem.description){ %>
-                    <p>description - <%= dateItem.description %></p>
-                <% } %>
-                <% if(dateItem.brand){ %>
-                    <p>brand - <%= dateItem.brand %></p>
-                <% } %>
-                <% if(dateItem.quantity){ %>
-                    <p>quantity - <%= dateItem.quantity %></p>
-                <% } %>
-                <% if(dateItem.price){ %>
-                    <p>price - <%= dateItem.price %></p>
-                <% } %>
-                <% if(dateItem.expDate){ %>
-                    <p>expDate - <%= dateItem.expDate %></p>
-                <% } %>
-                <% if(dateItem.manDate){ %>
-                    <p>manDate - <%= dateItem.manDate %></p>
-                <% } %>
-                <% if(dateItem.ingredient){ %>
-                    <p>ingredient - <%= dateItem.ingredient %></p>
-                <% } %>
-                <% if(dateItem.salt){ %>
-                    <p>salt - <%= dateItem.salt %></p>
-                <% } %>
-        <% }); %>
+    <section class="col">
+        <div class="card text-center bg-light">
+            <div class="card-body">
+
+                <h1 class="card-title">Product information</h1>
+                <h4 class="card-title"><%= product.name %></h4>
+                <% product.data.forEach(function(dateItem) { %>
+
+                    <% if(dateItem.name){ %>
+                        <p class="card-text">Name - <%= dateItem.name %></p>
+                    <% } %>
+
+                    <% if(dateItem.description){ %>
+                        <p class="card-text">Description - <%= dateItem.description %></p>
+                    <% } %>
+
+                    <% if(dateItem.brand){ %>
+                        <p class="card-text">Brand - <%= dateItem.brand %></p>
+                    <% } %>
+
+                    <% if(dateItem.quantity){ %>
+                        <p class="card-text">Quantity - <%= dateItem.quantity %></p>
+                    <% } %>
+
+                    <% if(dateItem.price){ %>
+                        <p class="card-text">Price - <%= dateItem.price %></p>
+                    <% } %>
+
+                    <% if(dateItem.expDate){ %>
+                        <p class="card-text">Expiration Date - <%= dateItem.expDate %></p>
+                    <% } %>
+
+                    <% if(dateItem.manDate){ %>
+                        <p class="card-text">Manufacture Date - <%= dateItem.manDate %></p>
+                    <% } %>
+
+                    <% if(dateItem.qualityCertifications){ %>
+                        <span class="card-text">Quality Certifications - </span>
+                            <p></p>
+                            <ul class="list-group">
+                                <% dateItem.qualityCertifications.forEach(function(qualityCertification) { %>
+                                    <li class="card-text list-group-item list-group-item-info">
+                                        <%= qualityCertification %>
+                                    </li>
+                                <% }); %>
+                            </ul>
+                    <% } %>
+
+                    <% if(dateItem.storeConditions){ %>
+                        <p class="card-text">Store Conditions - <%= dateItem.storeConditions %></p>
+                    <% } %>
+
+                    <% if(dateItem.healthWarnings){ %>
+                        <p class="card-text">Health Warnings - <%= dateItem.healthWarnings %></p>
+                    <% } %>
+
+                    <% if(dateItem.sugarContent){ %>
+                        <p class="card-text">Sugar Content - <%= dateItem.sugarContent %></p>
+                    <% } %>
+
+                    <% if(dateItem.fatContent){ %>
+                        <p class="card-text">Fat Content - <%= dateItem.fatContent %></p>
+                    <% } %>
+
+                    <% if(dateItem.saltContent){ %>
+                        <p class="card-text">Salt Content - <%= dateItem.saltContent %></p>
+                    <% } %>
+
+                    <% if(dateItem.nutritionInfo){ %>
+                        <p class="card-text font-weight-bold">Nutrition Information</p>
+
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Nutrition</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% dateItem.nutritionInfo.forEach(function(nutritionStr) { %>
+                                    <tr>
+                                        <td><%= nutritionStr.split('-')[0] %></td>
+                                        <td><%= nutritionStr.split('-')[1] %></td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+
+                    <% } %>
+
+                    <% if(dateItem.ingredients){ %>
+                        <span class="card-text">Ingredients - </span>
+                        <p></p>
+                        <ul class="list-group">
+                            <% dateItem.ingredients.forEach(function(ingredient) { %>
+                                <li class="card-text list-group-item list-group-item-info">
+                                    <%= ingredient %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    <% } %>
+
+                    <% if(dateItem.alergenInfo){ %>
+                        <p class="card-text">Alergen Information - <%= dateItem.alergenInfo %></p>
+                    <% } %>
+
+                    <span class="card-text">Artificial Flavorings - </span>
+                        <% if(dateItem.artificialFlavorings){ %>
+                            <span class="badge bg-warning rounded-pill">True</span>
+                        <% }else{ %>
+                            <span class="badge bg-success rounded-pill">False</span>
+                        <% } %>
+
+                        <p></p>
+
+                    <span class="card-text">Gmo - </span>
+                        <% if(dateItem.gmo){ %>
+                            <span class="badge bg-warning rounded-pill">True</span>
+                        <% }else{ %>
+                            <span class="badge bg-success rounded-pill">False</span>
+                        <% } %>
+
+                        <p></p>
+
+                    <span class="card-text">Preservation - </span>
+                        <% if(dateItem.preservation){ %>
+                            <span class="badge bg-warning rounded-pill">True</span>
+                        <% }else{ %>
+                            <span class="badge bg-success rounded-pill">False</span>
+                        <% } %>
+
+                        <p></p>
+
+                    <span class="card-text">Vegan - </span>
+                        <% if(dateItem.vegan){ %>
+                            <span class="badge bg-info text-dark rounded-pill">True</span>
+                        <% }else{ %>
+                            <span class="badge bg-success rounded-pill">False</span>
+                        <% } %>
+
+                        <p></p>
+
+                    <span class="card-text">Vegetarian - </span>
+                        <% if(dateItem.vegetarian){ %>
+                            <span class="badge bg-info text-dark rounded-pill">True</span>
+                        <% }else{ %>
+                            <span class="badge bg-success rounded-pill">False</span>
+                        <% } %>
+
+                        <p></p>
+
+                    <span class="card-text">Halal - </span>
+                        <% if(dateItem.halal){ %>
+                            <span class="badge bg-info text-dark rounded-pill">True</span>
+                        <% }else{ %>
+                            <span class="badge bg-success rounded-pill">False</span>
+                        <% } %>
+
+                        <p></p>
+
+                    <% if(dateItem.shippingFrom){ %>
+                        <p class="card-text">Shipping From - <%= dateItem.shippingFrom %></p>
+                    <% } %>
+
+                    <% if(dateItem.shippingTo){ %>
+                        <p class="card-text">Shipping To - <%= dateItem.shippingTo %></p>
+                    <% } %>
+
+                    <% if(dateItem.shippingMethod){ %>
+                        <p class="card-text">Shipping Method - <%= dateItem.shippingMethod %></p>
+                    <% } %>
+
+                    <% if(dateItem.shippingDate){ %>
+                        <p class="card-text">Shipping Date - <%= dateItem.shippingDate %></p>
+                    <% } %>
+
+                    <% if(dateItem.batchNum){ %>
+                        <p class="card-text">Batch Number - <%= dateItem.batchNum %></p>
+                    <% } %>
+
+                    <hr/>
+                <% }); %>
+
+            </div>
+        </div>
+
     </section>
+</div>
 
 </body>
 </html>

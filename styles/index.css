@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    background-color: blueviolet;
+}
+
+p {
+    color: aqua;
+}
+
+.section {
+    width: 50%;
+    background-color: lightgray;
+    padding: 20px;
+}

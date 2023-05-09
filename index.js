@@ -11,6 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 connectDB();
 app.use(cors());
+app.use(express.static('./public'));
 
 app.use('/product', productRouter);
 app.use('/owner', productOwnerRouter);
